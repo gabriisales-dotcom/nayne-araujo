@@ -209,10 +209,40 @@
     setPos(50);
     if (range) range.addEventListener("input", function () { ba.style.setProperty("--pos", range.value + "%"); });
 
+    // arrastar em qualquer ponto da foto; na vertical o toque continua a fazer scroll (touch-action: pan-y)
+    var frame = $(".ba__frame", ba);
+    var userMoved = false;
+    function dragTo(e) {
+      var r = frame.getBoundingClientRect();
+      setPos((e.clientX - r.left) / r.width * 100);
+    }
+    if (frame) {
+      // no toque só mexe depois de um gesto horizontal: rolar a página por cima da foto não move a barra
+      var startX = null, moved = false;
+      frame.addEventListener("pointerdown", function (e) {
+        if (ba.classList.contains("is-single")) return;
+        startX = e.clientX; moved = false;
+        frame.setPointerCapture(e.pointerId);
+        if (e.pointerType === "mouse") { userMoved = moved = true; dragTo(e); }
+      });
+      frame.addEventListener("pointermove", function (e) {
+        if (startX === null) return;
+        if (!moved && Math.abs(e.clientX - startX) < 6) return;
+        userMoved = moved = true;
+        dragTo(e);
+      });
+      frame.addEventListener("pointerup", function (e) {
+        if (startX !== null && !moved) { userMoved = true; dragTo(e); }   // toque simples
+        startX = null;
+      });
+      frame.addEventListener("pointercancel", function () { startX = null; });   // o browser ficou com o gesto (scroll)
+    }
+
     // teaser tween on first view
     function tween(from, to, dur, cb, done) {
       var start = performance.now();
       (function step(now) {
+        if (userMoved) return;   // o gesto da pessoa cancela a demonstração
         var t = clamp((now - start) / dur, 0, 1);
         var e = 1 - Math.pow(1 - t, 3);
         cb(from + (to - from) * e);
