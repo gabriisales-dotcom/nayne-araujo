@@ -269,15 +269,13 @@ body.menu-open .menu__links a:nth-child(6){transition-delay:.46s;}
 /* ============================================================
    HERO
    ============================================================ */
+body.at-top{background:var(--blush);}
 .hero{
   position:relative;
   min-height:100svh;
   padding:clamp(120px,16vh,180px) var(--pad) clamp(96px,11vh,112px);
   display:flex;flex-direction:column;justify-content:center;
-  background:
-    radial-gradient(120% 90% at 85% 0%, var(--blush) 0%, transparent 55%),
-    radial-gradient(90% 80% at 0% 100%, rgba(239,207,212,.5) 0%, transparent 50%),
-    var(--porcelain);
+  background:var(--blush);
   overflow:hidden;
 }
 .hero__grid{

@@ -57,6 +57,8 @@
     var sy = window.pageYOffset;
     if (nav) {
       nav.classList.toggle("is-stuck", sy > 24);
+      // o Safari do iPhone pinta a zona da Dynamic Island com o fundo do body: no topo, a cor do hero
+      document.body.classList.toggle("at-top", sy <= 24);
       if (!body.classList.contains("menu-open")) {
         if (sy > lastY && sy > 340) nav.classList.add("is-hidden");
         else nav.classList.remove("is-hidden");
