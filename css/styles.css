@@ -296,7 +296,7 @@ body.at-top{background:var(--blush);}
 .hero__actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;}
 
 .hero__col--media{display:flex;justify-content:center;}
-.hero__figure{position:relative;width:min(100%,440px);}
+.hero__figure{position:relative;isolation:isolate;width:min(100%,440px);} /* isolate: sem isto, a linha (z-index:-1) fica atrás do fundo do hero assim que a entrada termina */
 .hero__frame{
   position:relative;aspect-ratio:4/5;overflow:hidden;
   border-radius:var(--arch);
@@ -691,7 +691,7 @@ a.contact__v:hover::after{transform:scaleX(1);transform-origin:left;}
   .nav__links,.nav__cta{display:none;}
   .nav__burger{display:block;}
   .hero__grid{grid-template-columns:1fr;gap:44px;}
-  .hero__col--media{order:-1;justify-content:flex-start;}
+  .hero__col--media{order:-1;justify-content:center;}
   .hero__figure{width:min(78%,360px);}
   .about__grid{grid-template-columns:1fr;gap:60px;}
   .about__media{max-width:440px;}
