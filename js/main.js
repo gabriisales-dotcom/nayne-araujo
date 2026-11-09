@@ -199,6 +199,26 @@
     });
   });
 
+  /* -------------------------------------------------- preçário */
+  (function () {
+    var panel = $("[data-prices]"); if (!panel) return;
+    var box = panel.parentNode;
+    var toggle = $("[data-prices-toggle]", box);
+    var label = $("[data-prices-label]", box);
+    var close = $("[data-prices-close]", box);
+    function setOpen(open) {
+      box.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      label.textContent = open ? "Ver menos" : "Ver mais serviços";
+    }
+    toggle.addEventListener("click", function () { setOpen(!box.classList.contains("is-open")); });
+    close.addEventListener("click", function () {
+      setOpen(false);
+      toggle.focus({ preventScroll: true });
+      scrollToTarget(toggle);
+    });
+  })();
+
   /* -------------------------------------------------- before / after */
   (function () {
     var ba = $("[data-ba]"); if (!ba) return;
